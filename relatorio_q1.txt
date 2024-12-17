@@ -1,0 +1,8 @@
+Relatório:
+A implementação da classe `PilhaEstatica` oferece uma TAD de pilha com capacidade fixa. Ela inclui:
+1. Métodos de manipulação (empilha, desempilha, le_topo).
+2. Métodos de impressão (imprimir, imprimir_reversa).
+3. Funções adicionais: verificação de palíndromo, elimina elemento e distribui pares e ímpares.
+O tempo de execução é medido em cada operação usando a biblioteca `time`.
+O método `empilha` adiciona um elemento ao topo em O(1), enquanto operações mais complexas, como `elimina`, funcionam em O(n).
+O uso de estruturas auxiliares (pilhas temporárias) garante que operações como `elimina` mantenham a ordem original da pilha

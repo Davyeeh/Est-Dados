@@ -1,4 +1,4 @@
-Relatório:
+Relatório da 1º Questão:
 A implementação da classe `PilhaEstatica` oferece uma TAD de pilha com capacidade fixa. Ela inclui:
 1. Métodos de manipulação (empilha, desempilha, le_topo).
 2. Métodos de impressão (imprimir, imprimir_reversa).

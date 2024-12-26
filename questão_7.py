@@ -1,91 +1,118 @@
-class No:
-    # Cria nós que armazenam um valor e uma referência para o próximo nó
+import random
+import time
+from typing import List
+
+class No: # Define a estrutura básica de um nó
+    #Armazena um valor e referência ao próximo nó
     def __init__(self, valor):
         self.valor = valor
         self.proximo = None
 
 class FilaCircular:
-
-    # Cria uma fila vazia definindo os ponteiros de início e fim como None
-    def __init__(self): 
+    def __init__(self): # Cria fila vazia inicializando ponteiros
         self.inicio = None
         self.fim = None
         
-    # Reinicia a fila para o estado vazio
-    def inicializar_fila(self):
+    def inicializar_fila(self): # Limpa a fila e mede tempo de execução
+        inicio_tempo = time.time()
         self.inicio = None
         self.fim = None
-
-    # Retorna True se a fila não tem elementos (início é None)
-    def fila_e_vazia(self):
-        return self.inicio is None
-    
-
-    # Sempre retorna False pois é uma implementação dinâmica
-    def fila_e_cheia(self):
-        return False
-    
-    def insere_fila(self, valor):
-
-        # Cria um novo nó com o valor fornecido
+        fim_tempo = time.time()
+        return fim_tempo - inicio_tempo
+        
+    def fila_e_vazia(self):# Verifica se fila está vazia e retorna tempo da operação
+        inicio_tempo = time.time()
+        resultado = self.inicio is None
+        fim_tempo = time.time()
+        return resultado, fim_tempo - inicio_tempo
+        
+    def fila_e_cheia(self): # Sempre retorna falso (implementação dinâmica) e mede tempo
+        inicio_tempo = time.time()
+        resultado = False
+        fim_tempo = time.time()
+        return resultado, fim_tempo - inicio_tempo
+        
+    def insere_fila(self, valor): # Adiciona elemento no final da fila e mede tempo de inserção
+        inicio_tempo = time.time()
         novo_no = No(valor)
-
-        # Se a fila estiver vazia: novo nó aponta para si mesmo e se torna início e fim.
-        if self.fila_e_vazia():
+        if self.fila_e_vazia()[0]:
             self.inicio = novo_no
             self.fim = novo_no
             novo_no.proximo = novo_no
-        # Se não estiver vazia: liga o novo nó no final mantendo a estrutura circular
         else:
             novo_no.proximo = self.inicio
             self.fim.proximo = novo_no
             self.fim = novo_no
-    
-    def remove_fila(self):
-        #Retorna None se a fila estiver vazia
-        if self.fila_e_vazia():
-            print("Erro: Fila vazia!")
-            return None
-        
-        #Armazena o valor a ser retornado
+        fim_tempo = time.time()
+        return fim_tempo - inicio_tempo
+            
+    def remove_fila(self): # Remove elemento do início e retorna tempo da remoção
+        inicio_tempo = time.time()
+        if self.fila_e_vazia()[0]:
+            fim_tempo = time.time()
+            return None, fim_tempo - inicio_tempo
+            
         valor = self.inicio.valor
-
-        # Se tiver apenas um elemento: reinicia a fila para vazia
         if self.inicio == self.fim:
             self.inicio = None
             self.fim = None
-        # Se tiver múltiplos elementos: avança o ponteiro de início e mantém o link circular
         else:
             self.inicio = self.inicio.proximo
             self.fim.proximo = self.inicio
+            
+        fim_tempo = time.time()
+        return valor, fim_tempo - inicio_tempo
         
-        #Retorna o valor removido
-        return valor
-        
-    def imprimir(self):
-
-        # Mostra "Fila vazia!" se estiver vazia
-        if self.fila_e_vazia():
+    def imprimir(self): # Mostra elementos do início ao fim com tempo de impressão
+        inicio_tempo = time.time()
+        if self.fila_e_vazia()[0]:
             print("Fila vazia!")
-            return
-        
-        # Caso contrário imprime todos os elementos do início ao fim
+            fim_tempo = time.time()
+            return fim_tempo - inicio_tempo
+            
         atual = self.inicio
-        print("Fila:", end=" ")
-
-        # Usa a propriedade circular para saber quando parar (quando chegar ao início novamente)
+        elementos = []
         while True:
-            print(atual.valor, end=" ")
+            elementos.append(str(atual.valor))
             atual = atual.proximo
             if atual == self.inicio:
                 break
-        print()
+        print("Fila:", " ".join(elementos))
+        fim_tempo = time.time()
+        return fim_tempo - inicio_tempo
 
+def testar_fila(tamanho: int): # Função para testar performance com diferentes tamanhos
+    # Cria fila e gera valores aleatórios
+    print(f"\nTestando com {tamanho} elementos:")
+    fila = FilaCircular()
+    
+    # Mede tempos de inicialização
+    # Teste de inicialização
+    tempo_init = fila.inicializar_fila()
+    print(f"Tempo de inicialização: {tempo_init:.8f} segundos")
+    
+    # Teste de inserção
+    tempo_total_insercao = 0
+    valores = random.sample(range(1, tamanho*10), tamanho)
+    for valor in valores:
+        tempo_total_insercao += fila.insere_fila(valor)
+    # Calcula média de tempo para inserções
+    print(f"Tempo médio de inserção: {tempo_total_insercao/tamanho:.8f} segundos")
+    
+    # Teste de remoção
+    tempo_total_remocao = 0
+    for _ in range(tamanho):
+        _, tempo = fila.remove_fila()
+        tempo_total_remocao += tempo
+    # Calcula média de tempo para remoções
+    print(f"Tempo médio de remoção: {tempo_total_remocao/tamanho:.8f} segundos")
 
-fila = FilaCircular()
-fila.insere_fila(1)
-fila.insere_fila(2)
-fila.insere_fila(3)
-fila.imprimir()
-fila.remove_fila()
-fila.imprimir()
+# Testando com diferentes tamanhos
+tamanhos = [100, 1000, 10000, 1000000]
+for tamanho in tamanhos:
+    testar_fila(tamanho)
+
+# Testa com arrays de 100, 1.000, 10.000 e 1.000.000 elementos
+# Exibe resultados de performance para cada tamanho
+# Permite comparação de eficiência entre diferentes volumes de dados
+# Usa amostragem aleatória para dados mais realistas

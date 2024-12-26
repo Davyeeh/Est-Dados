@@ -1,58 +1,76 @@
-RELATÓRIO - IMPLEMENTAÇÃO DE DEQUE ESTÁTICO
+RELATÓRIO - IMPLEMENTAÇÃO DE DEQUE ESTÁTICO COM ANÁLISE DE PERFORMANCE
 
 1. VISÃO GERAL
-Esta implementação apresenta um Deque (Double-ended queue) com alocação estática usando lista Python. A estrutura permite inserções e remoções em ambas as extremidades, com capacidade máxima definida na criação.
+Esta implementação apresenta um Deque (Double-ended queue) com alocação estática e análise detalhada de performance para diferentes volumes de dados.
 
 2. ESTRUTURA PRINCIPAL
 
 2.1 Classe DequeEstatico
-- Lista Python com tamanho fixo
-- Ponteiros de início e fim
-- Implementação circular para melhor aproveitamento do espaço
+- Implementação baseada em array circular
+- Controle através de ponteiros início e fim
+- Capacidade fixa definida na criação
+- Medição de tempo em todas operações
 
 3. OPERAÇÕES IMPLEMENTADAS
 
-3.1 Operações de Controle
-- Inicialização: Cria deque vazio com capacidade definida
-- Verificação de vazio: Baseada no ponteiro de início
-- Verificação de cheio: Considera estrutura circular
+3.1 Operações Básicas
+- Inicialização: Prepara estrutura vazia
+- Verificações: Estado vazio/cheio
+- Inserções: Início e fim do deque
+- Remoções: Início e fim do deque
 
-3.2 Operações de Manipulação
-- Inserção no início: Ajusta ponteiro de início
-- Inserção no final: Ajusta ponteiro de fim
-- Remoção do início: Remove e atualiza início
-- Remoção do final: Remove e atualiza fim
+3.2 Medições de Performance
+- Tempo de cada operação individual
+- Médias de tempo por tipo de operação
+- Análise comparativa entre volumes
 
-4. LÓGICA DA IMPLEMENTAÇÃO
+4. LÓGICA DE IMPLEMENTAÇÃO
 
 4.1 Estrutura Circular
-- Permite wrap-around dos ponteiros
-- Maximiza uso do espaço disponível
-- Trata casos especiais de extremidades
+- Aproveitamento eficiente do espaço
+- Tratamento de wrap-around
+- Controle de ponteiros circulares
 
-4.2 Controle de Ponteiros
-- início = -1: indica deque vazio
-- Atualização circular dos ponteiros
-- Tratamento de casos de overflow
+4.2 Análise de Dados
+- Testes com volumes crescentes
+- Geração aleatória de valores
+- Métricas separadas por operação
 
-4.3 Casos Especiais
-- Primeiro elemento inserido
-- Remoção do último elemento
-- Wrap-around na inserção/remoção
+5. METODOLOGIA DE TESTES
 
-5. COMPLEXIDADE DAS OPERAÇÕES
-- Inserções: O(1)
-- Remoções: O(1)
-- Verificações: O(1)
-- Impressão: O(n)
+5.1 Volumes de Dados
+- 100 elementos
+- 1.000 elementos
+- 10.000 elementos
+- 1.000.000 elementos
 
-6. VANTAGENS E CARACTERÍSTICAS
-- Acesso rápido às extremidades
-- Estrutura circular eficiente
-- Controle preciso de capacidade
-- Operações constantes em ambas extremidades
+5.2 Métricas Analisadas
+- Tempo de inicialização
+- Média de inserções início/fim
+- Média de remoções início/fim
+- Performance global
 
-7. APLICAÇÕES TÍPICAS
-- Gerenciamento de buffers
-- Histórico de operações
-- Processamento de dados em ambas direções
+6. CARACTERÍSTICAS TÉCNICAS
+
+6.1 Complexidade
+- Operações básicas: O(1)
+- Alocação inicial: O(n)
+- Medições: Precisão em segundos
+
+6.2 Recursos
+- Alocação estática
+- Array circular
+- Ponteiros de controle
+- Medição temporal precisa
+
+7. BENEFÍCIOS
+- Análise detalhada de performance
+- Comparação entre volumes
+- Identificação de padrões
+- Métricas de eficiência
+
+8. APLICAÇÕES
+- Avaliação de escalabilidade
+- Otimização de recursos
+- Benchmark de operações
+- Análise de comportamento

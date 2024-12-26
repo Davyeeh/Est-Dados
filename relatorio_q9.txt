@@ -1,0 +1,58 @@
+RELATÓRIO - IMPLEMENTAÇÃO DE DEQUE ESTÁTICO
+
+1. VISÃO GERAL
+Esta implementação apresenta um Deque (Double-ended queue) com alocação estática usando lista Python. A estrutura permite inserções e remoções em ambas as extremidades, com capacidade máxima definida na criação.
+
+2. ESTRUTURA PRINCIPAL
+
+2.1 Classe DequeEstatico
+- Lista Python com tamanho fixo
+- Ponteiros de início e fim
+- Implementação circular para melhor aproveitamento do espaço
+
+3. OPERAÇÕES IMPLEMENTADAS
+
+3.1 Operações de Controle
+- Inicialização: Cria deque vazio com capacidade definida
+- Verificação de vazio: Baseada no ponteiro de início
+- Verificação de cheio: Considera estrutura circular
+
+3.2 Operações de Manipulação
+- Inserção no início: Ajusta ponteiro de início
+- Inserção no final: Ajusta ponteiro de fim
+- Remoção do início: Remove e atualiza início
+- Remoção do final: Remove e atualiza fim
+
+4. LÓGICA DA IMPLEMENTAÇÃO
+
+4.1 Estrutura Circular
+- Permite wrap-around dos ponteiros
+- Maximiza uso do espaço disponível
+- Trata casos especiais de extremidades
+
+4.2 Controle de Ponteiros
+- início = -1: indica deque vazio
+- Atualização circular dos ponteiros
+- Tratamento de casos de overflow
+
+4.3 Casos Especiais
+- Primeiro elemento inserido
+- Remoção do último elemento
+- Wrap-around na inserção/remoção
+
+5. COMPLEXIDADE DAS OPERAÇÕES
+- Inserções: O(1)
+- Remoções: O(1)
+- Verificações: O(1)
+- Impressão: O(n)
+
+6. VANTAGENS E CARACTERÍSTICAS
+- Acesso rápido às extremidades
+- Estrutura circular eficiente
+- Controle preciso de capacidade
+- Operações constantes em ambas extremidades
+
+7. APLICAÇÕES TÍPICAS
+- Gerenciamento de buffers
+- Histórico de operações
+- Processamento de dados em ambas direções

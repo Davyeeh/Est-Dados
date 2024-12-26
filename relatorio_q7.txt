@@ -1,0 +1,57 @@
+RELATÓRIO - IMPLEMENTAÇÃO DE FILA CIRCULAR
+
+1. VISÃO GERAL
+Esta implementação apresenta uma Fila Circular utilizando alocação dinâmica através de uma lista encadeada circular. A estrutura permite inserir elementos no final da fila e removê-los do início, seguindo o princípio FIFO (First In, First Out).
+
+2. ESTRUTURAS PRINCIPAIS
+
+2.1 Classe No
+- Representa cada elemento da fila
+- Contém um valor e uma referência para o próximo nó
+- Permite a construção da estrutura encadeada
+
+2.2 Classe FilaCircular 
+- Gerencia a fila através de ponteiros de início e fim
+- Mantém a circularidade fazendo o último nó apontar para o primeiro
+
+3. OPERAÇÕES IMPLEMENTADAS
+
+3.1 Inicialização
+- Cria fila vazia com ponteiros nulos
+- Permite reinicializar a fila a qualquer momento
+
+3.2 Verificações
+- fila_e_vazia(): Verifica se não há elementos
+- fila_e_cheia(): Sempre falso por ser dinâmica
+
+3.3 Manipulação
+- insere_fila(): Adiciona elemento no final
+- remove_fila(): Remove elemento do início
+- imprimir(): Exibe elementos do início ao fim
+
+4. LÓGICA DA IMPLEMENTAÇÃO
+
+4.1 Inserção
+- Cria novo nó
+- Se fila vazia: nó aponta para si mesmo
+- Se não: mantém circularidade atualizando ponteiros
+
+4.2 Remoção
+- Verifica se fila vazia
+- Remove primeiro elemento
+- Atualiza ponteiros mantendo circularidade
+- Caso especial quando resta um elemento
+
+4.3 Impressão
+- Percorre do início até voltar ao primeiro elemento
+- Usa a circularidade para determinar fim do percurso
+
+5. VANTAGENS
+- Alocação dinâmica: cresce conforme necessidade
+- Operações O(1) para inserção e remoção
+- Estrutura circular permite percurso contínuo
+
+6. COMPLEXIDADE
+- Inserção: O(1)
+- Remoção: O(1) 
+- Impressão: O(n)

@@ -1,3 +1,5 @@
+import random
+import time
 class BTreeNode:
     def __init__(self, leaf=False):
         self.leaf = leaf  # Define se o nó é folha
@@ -83,9 +85,9 @@ class BTree:
                 node.count -= 1
         else:
             i = 0
-            while i < len(node.keys) e id_cliente > node.keys[i]:
+            while i < len(node.keys) and id_cliente > node.keys[i]:
                 i += 1
-            if i < len(node.keys) e node.keys[i] == id_cliente:
+            if i < len(node.keys) and node.keys[i] == id_cliente:
                 node.keys.pop(i)
                 node.children[i].count -= 1
             else:
@@ -121,9 +123,9 @@ class BTree:
         if node is None:
             return
         i = 0
-        while i < len(node.keys) e node.keys[i] < inicio:
+        while i < len(node.keys) and node.keys[i] < inicio:
             i += 1
-        while i < len(node.keys) e node.keys[i] <= fim:
+        while i < len(node.keys) and node.keys[i] <= fim:
             if node.leaf:
                 result.append(node.records[i])
             else:
@@ -153,3 +155,23 @@ print("Máximo:", b_tree.maximo())
 print("Buscar 12:", b_tree.search(b_tree.root, 12))
 print("Listar intervalo 6-17:", b_tree.listar_intervalo(6, 17))
 print("Total de registros:", b_tree.contar_registros())
+
+# Gerador aleatório e análise de tempo
+tamanhos = [100, 1000, 10000, 1000000]
+for tamanho in tamanhos:
+    ids = [random.randint(1, 1000000) for _ in range(tamanho)]
+    
+    # Medir tempo de inserção
+    b_tree = BTree(3)
+    inicio = time.time()
+    for id_cliente in ids:
+        b_tree.insert(id_cliente)
+    fim = time.time()
+    print(f"Tempo para inserir {tamanho} elementos: {fim - inicio:.6f} segundos")
+    
+    # Medir tempo de remoção
+    inicio = time.time()
+    for id_cliente in ids:
+        b_tree.remove(id_cliente)
+    fim = time.time()
+    print(f"Tempo para remover {tamanho} elementos: {fim - inicio:.6f} segundos")

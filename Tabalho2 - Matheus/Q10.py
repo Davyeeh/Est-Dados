@@ -64,3 +64,18 @@ if __name__ == "__main__":
         maiores = encontrar_5_maiores(lista)
         fim = time.time()
         print(f"Tempo para encontrar os 5 maiores com {tamanho} elementos: {fim - inicio:.6f} segundos")
+        
+        # Medir tempo de inserção
+        heap = MinHeap()
+        inicio = time.time()
+        for valor in lista:
+            heap.inserir(valor)
+        fim = time.time()
+        print(f"Tempo para inserir {tamanho} elementos: {fim - inicio:.6f} segundos")
+        
+        # Medir tempo de remoção
+        inicio = time.time()
+        while heap.heap:
+            heap.remover()
+        fim = time.time()
+        print(f"Tempo para remover {tamanho} elementos: {fim - inicio:.6f} segundos")

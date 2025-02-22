@@ -35,9 +35,8 @@ class MyHash:
             self.collisions += 1  # Incrementa o contador de colisões
 
             # Verifica se precisa fazer rehashing
-            if self.size > self.capacity * 0.75: # Limiar de 75%
+            if self.size > self.capacity * 0.75:  # Limiar de 75%
                 self._rehash()
-
 
     def remover(self, key):
         index = self._hash_function(key)
@@ -74,7 +73,7 @@ class MyHash:
 
     def verificar_colisao(self, key):
         index = self._hash_function(key)
-        return self.table[index] is not None and self.table[index].next is not None # Verifica se há mais de um nó no índice
+        return self.table[index] is not None and self.table[index].next is not None  # Verifica se há mais de um nó no índice
 
     def _rehash(self):
         new_capacity = self.capacity * 2
@@ -83,51 +82,58 @@ class MyHash:
         self.capacity = new_capacity
         self.table = new_table
         self.size = 0
-        self.collisions = 0 # Reseta o contador de colisoes
+        self.collisions = 0  # Reseta o contador de colisoes
 
         for i in range(len(old_table)):
             current = old_table[i]
             while current:
-                self.inserir(current.key, current.value) # Reinsere os elementos na nova tabela
+                self.inserir(current.key, current.value)  # Reinsere os elementos na nova tabela
                 current = current.next
 
     def contar_colisoes(self):
         return self.collisions
 
-
 # Driver code
 if __name__ == '__main__':
     ht = MyHash(5)
 
-    ht.inserir("maca", 3)
-    ht.inserir("banana", 2)
-    ht.inserir("cereja", 5)
-    ht.inserir("uva", 7) # Força colisão
-    ht.inserir("melao", 9) # Força colisão
-    ht.inserir("abacate", 11) # Força colisão
-    ht.inserir("kiwi", 13) # Força colisão
+    ht.inserir("lapis", 3)
+    ht.inserir("caderno", 2)
+    ht.inserir("caneta", 5)
+    ht.inserir("borracha", 7)
+    ht.inserir("regua", 9)
+    ht.inserir("apontador", 11)
+    ht.inserir("mochila", 13)
 
+    print("\n*** Verificando se alguns itens estão na tabela: ***\n")
+    # método buscar para verificar a existência da chave
+    try:
+        ht.buscar("lapis")
+        print("lapis está na tabela")
+    except KeyError:
+        print("lapis não está na tabela")
 
-    print("maca" in ht)  # True
-    print("azeitona" in ht)  # False
+    try:
+        ht.buscar("estojo")
+        print("estojo está na tabela")
+    except KeyError:
+        print("estojo não está na tabela")
 
-    print(ht.buscar("banana"))  # 2
+    print(f"O caderno está no slot {ht.buscar("caderno")}")  # 2
 
-    ht.inserir("banana", 4)
-    print(ht.buscar("banana"))  # 4
+    ht.inserir("caderno", 4)
+    print(f"Atualizando o slot de caderno para o slot {ht.buscar("caderno")}")  # 4
 
-    ht.remover("maca")
-    print(ht.tamanho())  # 4
+    ht.remover("lapis")
+    print(f"Tamanho da hash depois de remover 'lapis': {ht.tamanho()}")  # 6
 
-    print(ht.verificar_colisao("banana")) # True, pois "banana" colidiu com outros elementos
-    print(ht.verificar_colisao("uva")) # True, pois "uva" colidiu com outros elementos
-    print(ht.verificar_colisao("abacate")) # True, pois "abacate" colidiu com outros elementos
-    print(ht.verificar_colisao("kiwi")) # True, pois "kiwi" colidiu com outros elementos
-    print(ht.verificar_colisao("pera")) # False, pois "pera" não está na tabela
+    print("\n *** Verificando colisões, se True houve colisão, senão False ***\n")
+    print(f"Caderno: {ht.verificar_colisao("caderno")}")  # True, pois "caderno" colidiu com outros elementos
+    print(f"Borracha: {ht.verificar_colisao("borracha")}")  # True, pois "borracha" colidiu com outros elementos
+    print(f"Apontador: {ht.verificar_colisao("apontador")}")  # True, pois "apontador" colidiu com outros elementos
+    print(f"Mochila: {ht.verificar_colisao("mochila")}")  # True, pois "mochila" colidiu com outros elementos
+    print(f"Estojo: {ht.verificar_colisao("estojo")}")  # False, pois "estojo" não está na tabela
 
-    print(f"Número de colisões: {ht.contar_colisoes()}") # Imprime o número de colisões
+    print(f"\nNúmero de colisões: {ht.contar_colisoes()}")  # Imprime o número de colisões
 
-    print(f"Capacidade da tabela: {ht.capacity}") # Imprime a capacidade da tabela após o rehashing
-
- 
- 
+    print(f"Capacidade da tabela: {ht.capacity}")  # Imprime a capacidade da tabela após o rehashing

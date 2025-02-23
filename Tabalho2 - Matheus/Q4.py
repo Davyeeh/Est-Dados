@@ -168,6 +168,47 @@ class AVLTree:
         min_node = self.getMinValueNode(root)
         return (min_node.id_participante, min_node.pontuacao)
 
+# Função para medir o tempo de execução de uma operação
+def measure_time(operation, *args):
+    start_time = time.time()
+    operation(*args)
+    end_time = time.time()
+    return end_time - start_time
+
+# Função para gerar dados aleatórios
+def generate_random_data(size):
+    return [(f"Participante_{i}", random.randint(1, 100)) for i in range(size)]
+
+# Função para medir o tempo de inclusão de dados na árvore AVL
+def measure_insertion_time(tree, data):
+    root = None
+    for id_participante, pontuacao in data:
+        root = tree.insert(root, id_participante, pontuacao)
+    return root
+
+# Função para medir o tempo de remoção de dados da árvore AVL
+def measure_removal_time(tree, root, data):
+    for id_participante, _ in data:
+        root = tree.remove(root, id_participante)
+    return root
+
+# Tamanhos dos dados
+sizes = [100, 1000, 10000, 1000000]
+
+# Medir tempos de inclusão e remoção para cada tamanho
+for size in sizes:
+    data = generate_random_data(size)
+    tree = AVLTree()
+    
+    # Medir tempo de inclusão
+    insertion_time = measure_time(measure_insertion_time, tree, data)
+    print(f"Tamanho: {size}, Tempo de inclusão: {insertion_time:.4f} segundos")
+    
+    # Medir tempo de remoção
+    root = measure_insertion_time(tree, data)
+    removal_time = measure_time(measure_removal_time, tree, root, data)
+    print(f"Tamanho: {size}, Tempo de remoção: {removal_time:.4f} segundos")
+
 # Exemplo de uso
 if __name__ == "__main__":
     tree = AVLTree()
@@ -181,4 +222,3 @@ if __name__ == "__main__":
     result = []
     tree.scores_above(root, 45, result)
     print("Pontuações acima de 45:", result)
-

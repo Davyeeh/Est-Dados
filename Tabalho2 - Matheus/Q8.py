@@ -1,3 +1,6 @@
+import random
+import time
+
 class Node:
     def __init__(self, key, value):
         self.key = key
@@ -92,6 +95,46 @@ class MyHash:
 
     def contar_colisoes(self):
         return self.collisions
+
+# Função para medir o tempo de execução de uma operação
+def measure_time(operation, *args):
+    start_time = time.time()
+    operation(*args)
+    end_time = time.time()
+    return end_time - start_time
+
+# Função para gerar dados aleatórios
+def generate_random_data(size):
+    return [(f"Item_{i}", random.randint(1, 100)) for i in range(size)]
+
+# Função para medir o tempo de inclusão de dados na tabela hash
+def measure_insertion_time(hash_table, data):
+    for key, value in data:
+        hash_table.inserir(key, value)
+
+# Função para medir o tempo de remoção de dados da tabela hash
+def measure_removal_time(hash_table, data):
+    for key, _ in data:
+        try:
+            hash_table.remover(key)
+        except KeyError:
+            pass
+
+# Tamanhos dos dados
+sizes = [100, 1000, 10000, 1000000]
+
+# Medir tempos de inclusão e remoção para cada tamanho
+for size in sizes:
+    data = generate_random_data(size)
+    hash_table = MyHash(size * 2)  # Inicializa a tabela hash com o dobro da capacidade para reduzir colisões
+    
+    # Medir tempo de inclusão
+    insertion_time = measure_time(measure_insertion_time, hash_table, data)
+    print(f"Tamanho: {size}, Tempo de inclusão: {insertion_time:.4f} segundos")
+    
+    # Medir tempo de remoção
+    removal_time = measure_time(measure_removal_time, hash_table, data)
+    print(f"Tamanho: {size}, Tempo de remoção: {removal_time:.4f} segundos")
 
 # Driver code
 if __name__ == '__main__':
